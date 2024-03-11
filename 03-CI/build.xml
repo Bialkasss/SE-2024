@@ -1,0 +1,76 @@
+﻿<project name="Grain-Bank" default="compile">
+	<path id="jetty.cp">
+		<fileset dir="../Jetty"/>
+	</path>
+	<path id="lib.cp">
+		<pathelement location="lib/freemarker.jar"/>
+		<pathelement location="lib/servlet-api-2.5.jar"/>
+		<path refid="jetty.cp"/>
+	</path>
+	<path id="dist.cp">
+		<path refid="lib.cp"/>
+		<pathelement location="dist/bank.jar"/>
+	</path>
+	<target name="init">
+		<echo message="Project ${ant.project.name} initialization." />
+		<echo message="Scope of this target:" />
+		<echo message="* make bin directory" />
+		<mkdir dir="bin"/>
+		<echo message="* make dist directory" />
+		<mkdir dir="dist"/>
+	</target>
+	<target name="compile" depends="init">
+		<echo message="Compile ${ant.project.name} project." />
+		<echo message="Scope of this target:" />
+		<echo message="* compile project source code (located in src directory) to bin directory" />
+		<javac srcdir="src" destdir="bin" includeantruntime="false" classpathref="lib.cp"/>
+		<echo message="This target depends on:" />
+		<echo message="* project's initialization" />
+	</target>
+	<target name="copy" depends="init">
+		<echo message="Copy static contents of ${ant.project.name} project." />
+		<echo message="Scope of this target:" />
+		<echo message="* copy directory res contents to bin directory" />
+		<copy todir="bin">
+			<fileset dir="res"/>
+		</copy>
+		<echo message="This target depends on:" />
+		<echo message="* project's initialization" />
+	</target>
+	<target name="dist" depends="compile, copy, init">
+		<echo message="Prepare the jar for distribution of ${ant.project.name} project." />
+		<echo message="Scope of this target:" />
+		<echo message="* create bank.jar file in dist directory from binary code in bin directory" />
+		<jar destfile="dist/bank.jar">
+			<fileset dir="bin"/>
+		</jar>
+		<echo message="The target depends on:" />
+		<echo message="* project compilation (code must be compiled)" />
+		<echo message="* copy static contents of the project (static files must be in bin directory)" />
+		<echo message="* project's init (dist directory must exist)" />
+	</target>
+	<target name="clean">
+		<echo message="Remove project ${ant.project.name} binary files." />
+		<echo message="Scope of this target:" />
+		<echo message="* remove bin directory" />
+		<delete dir="bin"/>
+	</target>
+	<target name="clean-all" depends="clean">
+		<echo message="Delete all executable files of the ${ant.project.name} project." />
+		<echo message="Scope of this target:" />
+		<echo message="* delete dist directory" />
+		<delete dir="dist"/>
+		<echo message="The target depends on:" />
+		<echo message="* delete project binary files" />
+	</target>
+	<target name="run" depends="dist">
+		<echo message="Run ${ant.project.name} project." />
+		<echo message="Scope of this target:" />
+		<echo message="* run put.io.selenium.atm.SimpleServer class" />
+		<echo message="  from the bank.jar file," />
+		<echo message="  remember to provide the path to the required libraries" />
+		<java classname="put.io.selenium.atm.SimpleServer" classpathref="dist.cp" />
+		<echo message="The target depends on:" />
+		<echo message="* Prepare the jar file" />
+	</target>
+</project>
