@@ -1,8 +1,10 @@
 //comment on the beginning of the file
+//Add another comment- 2nd change
+
 public class Main {
   int x = 10;
   int y = 25;
-	
+  int z = 15;	
   public static void main(String[] args) {
     Main myObj1 = new Main();  // Object 1
     Main myObj2 = new Main();  // Object 2
