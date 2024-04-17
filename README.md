@@ -1,3 +1,3 @@
-# SE-2024 krowa :o
+# SE-2024
 #Maria Musiał 156062
 #Edit 18-03-2024
