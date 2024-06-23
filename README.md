@@ -1,3 +1,2 @@
-# SE-2024
-#Maria Musiał 156062
-#Edit 18-03-2024
+# Software Engeineering-2024
+# Tasks from Univesrity course
